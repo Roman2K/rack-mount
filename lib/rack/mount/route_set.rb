@@ -6,7 +6,7 @@ module Rack
         :keys => [:method, :first_segment]
       }.freeze
 
-      def initialize(options = {}, &block)
+      def initialize(options = {})
         @options = DEFAULT_OPTIONS.dup.merge!(options)
         @keys = @options.delete(:keys)
         @named_routes = {}
@@ -17,7 +17,7 @@ module Rack
         end
 
         if block_given?
-          block.call(self)
+          yield self
           freeze
         end
       end

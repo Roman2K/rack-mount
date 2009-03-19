@@ -41,7 +41,7 @@ module Rack
         end
 
         def match(path, options = {}, &block)
-          if block_given?
+          if block
             @scope_stack.push(options.merge({:path => path}))
             begin
               instance_eval(&block)
