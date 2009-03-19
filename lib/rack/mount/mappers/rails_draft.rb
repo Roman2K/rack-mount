@@ -42,8 +42,8 @@ module Rack
 
         def match(path, options = {}, &block)
           if block_given?
+            @scope_stack.push(options.merge({:path => path}))
             begin
-              @scope_stack.push(options.merge({:path => path}))
               instance_eval(&block)
             ensure
               @scope_stack.pop
