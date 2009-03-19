@@ -77,12 +77,14 @@ module Rack
 
         def prepare(first = [], last = [], &block)
           Thread.current[:merb_routes] = []
-          root_behavior._with_proxy(&block)
-          routes = Thread.current[:merb_routes]
-          routes.each { |route| add_route(*route) }
-          self
-        ensure
-          Thread.current[:merb_routes] = nil
+          begin
+            root_behavior._with_proxy(&block)
+            routes = Thread.current[:merb_routes]
+            routes.each { |route| add_route(*route) }
+            self
+          ensure
+            Thread.current[:merb_routes] = nil
+          end
         end
 
         def add_route(conditions, params, deferred_procs, options = {})
