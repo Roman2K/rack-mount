@@ -99,9 +99,11 @@ module Rack
 
         def controller(controller, &block)
           @scope_stack.push(:controller => controller)
-          instance_eval(&block)
-        ensure
-          @scope_stack.pop
+          begin
+            instance_eval(&block)
+          ensure
+            @scope_stack.pop
+          end
         end
 
         def namespace(namespace, &block)
