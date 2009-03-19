@@ -1,5 +1,6 @@
 require 'active_support/inflector'
 require 'merb-core/dispatch/router'
+require 'rack/request'
 
 module Rack
   module Mount
