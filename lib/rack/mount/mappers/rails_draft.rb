@@ -107,8 +107,8 @@ module Rack
         end
 
         def namespace(namespace, &block)
+          @scope_stack.push(:path => namespace.to_s, :controller => "#{namespace}/")
           begin
-            @scope_stack.push(:path => namespace.to_s, :controller => "#{namespace}/")
             instance_eval(&block)
           ensure
             @scope_stack.pop
